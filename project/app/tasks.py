@@ -28,7 +28,7 @@ def weekly_newsletter():
             recipient_list=user_email,
         )
 
-
+@shared_task
 def cleanup_codes():
     expired_codes = OneTimeCode.objects.filter(created_at__lt=timezone.now() - timezone.timedelta(minutes=3))
     expired_codes.delete()
