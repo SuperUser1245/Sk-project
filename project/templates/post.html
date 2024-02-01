@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block content %}
+<br>
+<article style="position:relative;top:100px;left:400px;width:1000px;margin:25px;margin-bottom: 20px;padding: 15px;border: 1px solid #ccc;border-radius: 5px;height:400px;">
+<h2 style="text-align:center;">{{ post.title }}</h2>
+<h6 style="text-align:right;">{{ post.post_time|date:'H:i, d M y '}}</h6><br>
+<h3 style="text-align:center;">{{ post.content | safe }}</h3>
+</article>
+
+<footer style="margin-top:150px;position:relative;left:500px;">
+    <h2><i><b>Comments:</b></i></h2>
+    {% if post.comments.all %}
+    <ul>
+        {% for comment in post.comments.all %}
+        {% if comment.approved %}
+        <li>{{ comment.content }} - by {{ comment.user.username }} at {{ comment.comment_time|date:'H:i, d M y' }}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <span style="color: #888;font-size: 24px;position:relative;bottom:1rem;left:3.5rem;">There are no comments</span>
+    {% endif %}
+</footer>
+
+
+{% endblock content %}

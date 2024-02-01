@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h1>Edit The Post</h1>
+<hr>
+<form action="" method="post">
+    <h6 style="position:relative;text-align:center;">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+
+    <input type="submit" value="Save" />
+    </h6>
+</form>
+{% endblock content %}

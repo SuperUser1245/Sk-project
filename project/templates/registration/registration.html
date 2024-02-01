@@ -1,0 +1,16 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+
+<form method="post" action="" style="position:relative;top:100px;margin:40px;">
+    {% csrf_token %}
+    <h6>Enter your E-mail</h6>
+    <input type="email" name="email" placeholder="Enter Email" style="margin:8px;"><br>
+    <h6>Enter your Username</h6>
+    <input type="text" name="username" placeholder="Enter Username" style="margin:8px;"><br>
+    <h6>Enter your Password</h6>
+    <input type="password" name="password" placeholder="Enter Password" style="margin:8px;"><br>
+    <input type="submit" value="Register" style="margin:8px;margin-left:70px;">
+</form>
+
+{% endblock %}

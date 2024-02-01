@@ -1,0 +1,45 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+  {% if author_posts %}
+    {% for post in author_posts %}
+      <article style="position:relative;top:100px;margin:25px;margin-bottom: 20px;padding: 15px;border: 1px solid #ccc;border-radius: 5px;">
+        <header style="margin-bottom: 10px;">
+          <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+          <time style="color: #888;font-size: 14px;">{{ post.post_time|date:'H:i, d M y' }}</time>
+        </header>
+        <section style="margin-bottom: 15px;">
+          {{ post.content|safe|truncatewords:50 }}
+        </section>
+        <footer style="margin-top: 15px;">
+          {% if post.comments.all %}
+            <h4>Comments:</h4>
+            <ul>
+              {% for comment in post.comments.all %}
+                <li>
+                  {{ comment.content }} - by {{ comment.user.username }} at {{ comment.comment_time|date:'H:i, d M y' }}
+                  {% if not comment.approved %}
+                    <br>
+                    <span>
+                      <a href="{% url 'approve_comment' comment.id %}" style="color: #888;font-size: 20px;">Approve</a> or
+                      <a href="{% url 'delete_comment' comment.id %}" style="color: #888;font-size: 20px;">Delete</a>
+                    </span>
+                  {% else %}
+                    <br>
+                    <span>
+                      <a href="{% url 'delete_comment' comment.id %}" style="color: #888;font-size: 20px;">Delete</a>
+                    </span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          <a href="/posts/{{ post.id }}/edit"><button style="border:none;background-color:white;"><i>Edit</i></button></a>
+          <a href="/posts/{{ post.id }}/delete"><button style="border:none;background-color:white;"><i>Delete</i></button></a>
+        </footer>
+      </article>
+    {% endfor %}
+  {% else %}
+<h1 style="position:relative;top:160px;left:600px;"><i><b>You haven't made any posts yet!!!</b></i></h1>
+  {% endif %}
+{% endblock content %}

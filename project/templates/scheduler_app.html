@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Posts</title>
+</head>
+<body>
+    <h3>HI, This is the new posts since the last week:</h3>
+    <ul>
+    {% for title,id_post in posts %}
+        <li>
+            <a href="http://127.0.0.1:8000/posts/{{ id_post }}">{{ title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>

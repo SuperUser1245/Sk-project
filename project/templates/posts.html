@@ -1,0 +1,55 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+
+{% if posts %}
+    <section class="category-section" style="position:relative;top:100px;">
+        <div class="container" data-aos="fade-up">
+          <div class="section-header d-flex justify-content-between align-items-center mb-5">
+            <h2>Posts</h2>
+          </div>
+          <div style="justify-content: center;max-width:1050px;position:relative;left:5rem ;">
+                {% for post in posts %}
+                  <article style="margin:25px;margin-bottom: 20px;padding: 15px;border: 1px solid #ccc;border-radius: 5px;">
+                    <header style="margin-bottom: 10px;">
+                      <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                      <time style="color: #888;font-size: 14px;">{{ post.post_time|date:'H:i, d M y' }}</time>
+                    </header>
+                    <section  style="margin-bottom: 15px;">
+                      {{ post.content|safe|truncatewords:50 }}
+                    </section>
+
+                    <footer style="margin-top: 15px;">
+                      <h4>Comments:</h4>
+                      {% if post.comments.all %}
+
+                      <ul>
+                        {% for comment in post.comments.all|slice:":2" %}
+                          {% if comment.approved %}
+                            <li>{{ comment.content }} - by {{ comment.user.username }} at {{ comment.comment_time|date:'H:i, d M y' }}</li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+
+                      {% else %}
+                      <span style="color: #888;font-size: 14px;position:relative;bottom:1rem;left:0.5rem;">There are no comments</span>
+                      {% endif %}
+
+                      <form method="post" action="{% url 'add_comment' post.id %}">
+                        {% csrf_token %}
+                        <input type="text" name="comment_content" placeholder="Add Comment">
+                        <input type="submit" value="Post">
+                      </form>
+
+                    </footer>
+                  </article>
+                {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+{% else %}
+    <h2>There are no posts</h2>
+{% endif %}
+
+{% endblock content %}
